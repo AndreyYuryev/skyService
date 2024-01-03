@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Client, Stream, Message, Log
+from mailstream.models import Client, Stream, Message, Log
 
 
 @admin.register(Client)
