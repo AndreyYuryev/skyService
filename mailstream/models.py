@@ -14,6 +14,7 @@ class Client(models.Model):
     class Meta:
         verbose_name = 'Клиент сервиса'
         verbose_name_plural = 'Клиенты сервиса'
+        ordering = ['-fullname']
 
 
 class Stream(models.Model):
