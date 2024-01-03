@@ -22,7 +22,7 @@ class Client(models.Model):
 class Stream(models.Model):
     post_time = models.DateTimeField()
     regularity = models.CharField(max_length=1, choices=REGULARITY_VALUES, verbose_name='Периодичность')
-    status = models.CharField(max_length=2, choices=STATUS_VALUES, verbose_name='Статус рассылки')
+    status = models.CharField(max_length=1, choices=STATUS_VALUES, verbose_name='Статус рассылки')
 
     def __str__(self):
         return f'{self.status} - {self.regularity}'
