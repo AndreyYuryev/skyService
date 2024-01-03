@@ -1,12 +1,6 @@
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
-DAILY = 'D'
-WEEKLY = 'W'
-MONTHLY = 'M'
-REGULARITY_VALUES = [(DAILY, 'раз в день'), (WEEKLY, 'раз в неделю'), (MONTHLY, 'раз в месяц'), ]
-STATUS_VALUES = [('CL', 'завершена'), ('CR', 'создана'), ('ST', 'запущена'), ]
-ATTEMPT_VALUES = [('S', 'успешно'), ('E', 'с ошибкой'), ]
 
 
 class Client(models.Model):
@@ -23,8 +17,14 @@ class Client(models.Model):
 
 
 class Stream(models.Model):
+    DAILY = 'D'
+    WEEKLY = 'W'
+    MONTHLY = 'M'
+    REGULARITY_VALUES = [(DAILY, 'раз в день'), (WEEKLY, 'раз в неделю'), (MONTHLY, 'раз в месяц'), ]
+    STATUS_VALUES = [('CL', 'завершена'), ('CR', 'создана'), ('ST', 'запущена'), ]
     post_time = models.DateTimeField()
-    regularity = models.CharField(max_length=1, choices=REGULARITY_VALUES, default=MONTHLY, verbose_name='Периодичность')
+    regularity = models.CharField(max_length=1, choices=REGULARITY_VALUES, default=MONTHLY,
+                                  verbose_name='Периодичность')
     status = models.CharField(max_length=2, choices=STATUS_VALUES, verbose_name='Статус рассылки', **NULLABLE)
 
     def __str__(self):
@@ -48,6 +48,9 @@ class Message(models.Model):
 
 
 class Log(models.Model):
+    SUCCESS_ATTEMPT = 'S'
+    ERROR_ATTEMPT = 'E'
+    ATTEMPT_VALUES = [(SUCCESS_ATTEMPT, 'успешно'), (ERROR_ATTEMPT, 'с ошибкой'), ]
     last_attempt = models.DateTimeField()
     attempt_status = models.CharField(max_length=1, choices=ATTEMPT_VALUES, verbose_name='Статус попытки')
     response = models.TextField(**NULLABLE)
