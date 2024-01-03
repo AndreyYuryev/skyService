@@ -34,7 +34,7 @@ class Stream(models.Model):
 
 class Message(models.Model):
     subject = models.CharField(max_length=120, verbose_name='Тема письма')
-    body = models.TextField(verbose_name='Тело письма')
+    body = models.TextField(verbose_name='Тело письма', **NULLABLE)
 
     def __str__(self):
         return f'{self.subject}'
