@@ -3,6 +3,7 @@ from django.db import models
 NULLABLE = {'blank': True, 'null': True}
 REGULARITY_VALUES = [('d', 'раз в день'), ('w', 'раз в неделю', 'm', 'раз в месяц'), ]
 STATUS_VALUES = [('l', 'завершена'), ('r', 'создана'), ('s', 'запущена'), ]
+ATTEMPT_VALUES = [('s', 'успешно'), ('e', 'с ошибкой'), ]
 
 
 class Client(models.Model):
@@ -41,3 +42,16 @@ class Message(models.Model):
     class Meta:
         verbose_name = 'Сообщение'
         verbose_name_plural = 'Сообщения'
+
+
+class Log(models.Model):
+    last_attempt = models.DateTimeField()
+    attempt_status = models.CharField(max_length=1, choices=ATTEMPT_VALUES, verbose_name='Статус попытки')
+    response = models.TextField(**NULLABLE)
+
+    def __str__(self):
+        return f'{self.attempt_status}'
+
+    class Meta:
+        verbose_name = 'Журнал'
+        verbose_name_plural = 'Журналы'

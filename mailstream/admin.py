@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Client, Stream, Message
+from models import Client, Stream, Message, Log
 
 
 @admin.register(Client)
@@ -21,3 +21,10 @@ class MessageAdmin(admin.ModelAdmin):
     list_display = ('subject', 'body',)
     list_filter = ('subject',)
     search_fields = ('subject',)
+
+
+@admin.register(Log)
+class LogAdmin(admin.ModelAdmin):
+    list_display = ('attempt_status', 'last_attempt',)
+    list_filter = ('attempt_status',)
+    search_fields = ('attempt_status',)
