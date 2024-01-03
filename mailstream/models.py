@@ -8,7 +8,7 @@ ATTEMPT_VALUES = [('s', 'успешно'), ('e', 'с ошибкой'), ]
 
 class Client(models.Model):
     fullname = models.CharField(max_length=100, verbose_name='ФИО')
-    email = models.EmailField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True)
     comments = models.TextField()
 
     def __str__(self):
