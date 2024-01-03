@@ -1,7 +1,10 @@
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
-REGULARITY_VALUES = [('D', 'раз в день'), ('W', 'раз в неделю'), ('M', 'раз в месяц'), ]
+DAILY = 'D'
+WEEKLY = 'W'
+MONTHLY = 'M'
+REGULARITY_VALUES = [(DAILY, 'раз в день'), (WEEKLY, 'раз в неделю'), (MONTHLY, 'раз в месяц'), ]
 STATUS_VALUES = [('CL', 'завершена'), ('CR', 'создана'), ('ST', 'запущена'), ]
 ATTEMPT_VALUES = [('S', 'успешно'), ('E', 'с ошибкой'), ]
 
@@ -9,7 +12,7 @@ ATTEMPT_VALUES = [('S', 'успешно'), ('E', 'с ошибкой'), ]
 class Client(models.Model):
     fullname = models.CharField(max_length=100, verbose_name='ФИО')
     email = models.EmailField(max_length=255, unique=True)
-    comments = models.TextField()
+    comments = models.TextField(**NULLABLE)
 
     def __str__(self):
         return f'{self.fullname}'
@@ -21,8 +24,8 @@ class Client(models.Model):
 
 class Stream(models.Model):
     post_time = models.DateTimeField()
-    regularity = models.CharField(max_length=1, choices=REGULARITY_VALUES, verbose_name='Периодичность')
-    status = models.CharField(max_length=2, choices=STATUS_VALUES, verbose_name='Статус рассылки')
+    regularity = models.CharField(max_length=1, choices=REGULARITY_VALUES, default=MONTHLY, verbose_name='Периодичность')
+    status = models.CharField(max_length=2, choices=STATUS_VALUES, verbose_name='Статус рассылки', **NULLABLE)
 
     def __str__(self):
         return f'{self.status} - {self.regularity}'
