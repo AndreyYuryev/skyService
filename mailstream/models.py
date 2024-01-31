@@ -1,16 +1,9 @@
 from django.db import models
 from django.utils import timezone
-
-NULLABLE = {'blank': True, 'null': True}
-DAILY = 'D'
-WEEKLY = 'W'
-MONTHLY = 'M'
-REGULARITY_VALUES = [(DAILY, 'раз в день'), (WEEKLY, 'раз в неделю'), (MONTHLY, 'раз в месяц'), ]
-
-CREATED = 'CR'
-STARTED = 'ST'
-ENDED = 'ED'
-STATUS_VALUES = [(ENDED, 'завершена'), (CREATED, 'создана'), (STARTED, 'запущена'), ]
+from django.forms import ModelForm, DateTimeInput
+from mailstream.services import (NULLABLE,
+                                 DAILY, WEEKLY, MONTHLY, REGULARITY_VALUES,
+                                 CREATED, STARTED, ENDED, STATUS_VALUES)
 
 
 class Client(models.Model):
@@ -28,8 +21,8 @@ class Client(models.Model):
 
 
 class Message(models.Model):
-    subject = models.CharField(max_length=120, verbose_name='Тема письма')
-    body = models.TextField(verbose_name='Тело письма', **NULLABLE)
+    subject = models.CharField(max_length=120, verbose_name='тема письма')
+    body = models.TextField(verbose_name='тело письма', **NULLABLE)
 
     def __str__(self):
         return f'{self.subject}'
@@ -40,13 +33,13 @@ class Message(models.Model):
 
 
 class Stream(models.Model):
-    name = models.CharField(max_length=50, verbose_name='название рассылки', default='Расылка')
+    name = models.CharField(max_length=50, verbose_name='название рассылки', default='Рассылка')
     started_at = models.DateTimeField(verbose_name='начать с', default=timezone.now)
     ended_at = models.DateTimeField(verbose_name='закончить к', default=timezone.now)
     message = models.ForeignKey(Message, on_delete=models.RESTRICT, **NULLABLE)
     regularity = models.CharField(max_length=1, choices=REGULARITY_VALUES, default=MONTHLY,
                                   verbose_name='периодичность')
-    status = models.CharField(max_length=2, choices=STATUS_VALUES, default=CREATED, verbose_name='Статус рассылки',
+    status = models.CharField(max_length=2, choices=STATUS_VALUES, default=CREATED, verbose_name='статус рассылки',
                               **NULLABLE)
     all_recipient = models.BooleanField(default=True, verbose_name='отправить всем')
 

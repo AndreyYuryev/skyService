@@ -1,0 +1,7 @@
+{% extends 'mailstream/base.html' %}
+{% block content %}
+<div class="card-body">
+    <p class="card-title pricing-card-title navy_color">Тема письмо: {{ object.subject }}</small></p>
+    <p class="card-title pricing-card-title navy_color">Содержимое: {{ object.body }}</small></p>
+</div>
+{% endblock %}

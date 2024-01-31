@@ -15,6 +15,7 @@ class StreamAdmin(admin.ModelAdmin):
     list_filter = ('name', 'regularity', 'status',)
     search_fields = ('name',)
 
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('subject', 'body',)
@@ -28,8 +29,9 @@ class LogAdmin(admin.ModelAdmin):
     list_filter = ('stream', 'client', 'attempt_status',)
     search_fields = ('stream', 'client', 'attempt_status',)
 
+
 @admin.register(MailList)
 class MailListAdmin(admin.ModelAdmin):
-    list_display = ('stream', 'client', )
+    list_display = ('stream', 'client',)
     list_filter = ('stream', 'client',)
     search_fields = ('stream', 'client',)

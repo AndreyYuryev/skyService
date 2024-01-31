@@ -1,0 +1,14 @@
+{% extends 'mailstream/base.html' %}
+{% block content %}
+<div class="card-body">
+    <p class="card-title pricing-card-title navy_color">Имя: {{ object.name }}</small></p>
+    <p class="card-title pricing-card-title navy_color">Начало: {{ object.started_at }}</small></p>
+    <p class="card-title pricing-card-title navy_color">Окончание: {{ object.ended_at }}</small></p>
+    <p class="card-title pricing-card-title navy_color">Сообщение тема: {{ object.message.subject }}</small></p>
+    <p class="card-title pricing-card-title navy_color">Сообщение: {{ object.message.body }}</small></p>
+    <p class="card-title pricing-card-title navy_color">Периодичность: {{ regularity_value }}</small></p>
+    <p class="card-title pricing-card-title navy_color">Статус: {{ status_value }}</small></p>
+    <p class="card-title pricing-card-title navy_color">Все получатели: {{ object.all_recipient }}</small></p>
+
+</div>
+{% endblock %}
