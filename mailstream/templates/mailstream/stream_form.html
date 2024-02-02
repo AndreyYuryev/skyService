@@ -5,14 +5,18 @@
 <p class="fs-5 text-body-secondary">{{ subject }}</p>
 {% endif %}
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-    <div class="col">
+    <div class="col-6">
         <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-body">
+                {{ extra_value }}
                 <form method="post">
                     {{ form.media }}
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <input type="submit" value="Добавить" class="w-50 btn btn-lg btn-success"/>
+<!--                    {% for client in object.client.all %}-->
+<!--                    <input type="checkbox" name="client" value="{{client.id}}" />{{ client.email}} <br />-->
+<!--                    {% endfor %}-->
+                    <input type="submit" value="{{button}}" class="w-50 btn btn-lg btn-success"/>
                 </form>
             </div>
         </div>

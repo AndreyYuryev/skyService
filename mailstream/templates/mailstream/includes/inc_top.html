@@ -1,15 +1,16 @@
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <span class="fs-4">Сервис управления рассылками</span>
+        <a href="{% url 'mailstream:start' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <span class="fs-4">Сервис рассылок</span>
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="btn btn-primary rounded-pill px-3">Home</a></li>
-            <li class="nav-item"><a href="#" class="btn btn-outline-primary rounded-pill px-3">Features</a></li>
-            <li class="nav-item"><a href="#" class="btn btn-outline-primary rounded-pill px-3">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="btn btn-outline-primary rounded-pill px-3">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="btn btn-outline-primary rounded-pill px-3">About</a></li>
+            <li class="nav-item"><a href="{% url 'mailstream:stream_list' %}" class="btn btn-outline-primary rounded-pill px-3">Рассылки</a></li>
+            <li class="nav-item"><a href="{% url 'mailstream:client_list' %}" class="btn btn-outline-primary rounded-pill px-3">Подписчики</a></li>
+            <li class="nav-item"><a href="{% url 'blogstream:article_list' %}" class="btn btn-outline-primary rounded-pill px-3">Блог</a></li>
+            <li class="nav-item"><a href="#" class="btn btn-outline-primary rounded-pill px-3">Войти</a></li>
+            <li class="nav-item"><a href="#" class="btn btn-outline-primary rounded-pill px-3">Регистрация</a></li>
+            <li class="nav-item"><a href="/admin" class="btn btn-outline-primary rounded-pill px-3">Админка</a></li>
         </ul>
     </header>
 </div>

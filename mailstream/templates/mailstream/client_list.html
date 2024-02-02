@@ -1,0 +1,29 @@
+{% extends 'mailstream/base.html' %}
+{% block content %}
+<div class="row text-center">
+    <div class="col-12">
+        <p class="fs-5 text-body-secondary">Список подписчиков</p>
+        <table class="table table-sm table-borderless">
+            <thead>
+            <tr>
+                <th scope="col">Подписчик</th>
+                <th scope="col">Email</th>
+                <th scope="col">Комментарий</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+            <tr>
+                <td class="align-middle">
+                    <a class="w-100 btn btn-lg btn-outline-secondary"
+                       href="{% url 'mailstream:client_detail' pk=object.pk %}">{{object.fullname}}</a>
+                </td>
+                <td class="align-middle">{{ object.email }}</td>
+                <td class="justify-left">{{ object.comments|truncatechars:100 }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

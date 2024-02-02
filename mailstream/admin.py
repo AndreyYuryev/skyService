@@ -1,5 +1,5 @@
 from django.contrib import admin
-from mailstream.models import Client, Stream, Message, Log, MailList
+from mailstream.models import Client, Stream, Message, Log
 
 
 @admin.register(Client)
@@ -11,7 +11,7 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Stream)
 class StreamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'regularity', 'status', 'started_at', 'ended_at', 'all_recipient')
+    list_display = ('name', 'regularity', 'status', 'started_at', 'ended_at', 'created_by',)
     list_filter = ('name', 'regularity', 'status',)
     search_fields = ('name',)
 
@@ -29,9 +29,3 @@ class LogAdmin(admin.ModelAdmin):
     list_filter = ('stream', 'client', 'attempt_status',)
     search_fields = ('stream', 'client', 'attempt_status',)
 
-
-@admin.register(MailList)
-class MailListAdmin(admin.ModelAdmin):
-    list_display = ('stream', 'client',)
-    list_filter = ('stream', 'client',)
-    search_fields = ('stream', 'client',)

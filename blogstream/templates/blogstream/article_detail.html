@@ -1,0 +1,30 @@
+{% extends 'mailstream/base.html' %}
+{% load custom_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">{{ object.title }}</h4>
+                    <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-info">
+                            {{ object.viewed }}
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <small class="text-body-secondary">{{object.created_at}}</small>
+                    </div>
+                    <img src="{{ object.image|mediapath }}" class="img-fluid" alt="Image"/>
+                    <p class="card-text">{{object.text}}</p>
+                </div>
+                <div class="btn-group w-50">
+                    <a class="w-50 btn btn-sm btn-outline-secondary" href="{% url 'blogstream:article_list' %}">К списку
+                        статей</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -4,5 +4,7 @@
     <p class="card-title pricing-card-title navy_color">ФИО: {{ object.fullname }}</small></p>
     <p class="card-title pricing-card-title navy_color">Email: {{ object.email }}</small></p>
     <p class="card-title pricing-card-title navy_color">Комментарии: {{ object.comments }}</small></p>
+    <a class="w-100 btn btn-lg btn-outline-secondary"
+                       href="{% url 'mailstream:client_list' %}">к списку подписчиков</a>
 </div>
 {% endblock %}

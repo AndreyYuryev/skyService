@@ -9,3 +9,7 @@ CREATED = 'CR'
 STARTED = 'ST'
 ENDED = 'ED'
 STATUS_VALUES = [(ENDED, 'завершена'), (CREATED, 'создана'), (STARTED, 'запущена'), ]
+
+SUCCESS_ATTEMPT = 'S'
+ERROR_ATTEMPT = 'E'
+ATTEMPT_VALUES = [(SUCCESS_ATTEMPT, 'успешно'), (ERROR_ATTEMPT, 'с ошибкой'), ]
