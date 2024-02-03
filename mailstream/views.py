@@ -94,10 +94,24 @@ class MessageUpdateView(UpdateView):
         context['subject'] = self.object.subject
         return context
 
+    def get_success_url(self):
+        return reverse_lazy('mailstream:message_detail', kwargs={'pk': self.object.pk})
+
+
+class MessageDeleteView(DeleteView):
+    model = Message
+    extra_context = {'title': 'Удаление текста сообщения рассылки', 'button': 'Удалить'}
+    success_url = reverse_lazy('mailstream:message_list')
+
 
 class MessageDetailView(DetailView):
     model = Message
     extra_context = {'title': 'Обзор содержимого рассылки'}
+
+
+class MessageListView(ListView):
+    model = Message
+    extra_context = {'title': 'Обзор текстов рассылок'}
 
 
 class StreamCreateView(CreateView):

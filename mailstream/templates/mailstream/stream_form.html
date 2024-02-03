@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="row justify-content-md-center">
-        <div class="align-middle py-3">
+    <div class="align-middle py-3">
         <h4 class="my-0 fw-normal text-center">{{title}}</h4>
     </div>
     <div class="col-8 bg-body-tertiary">
@@ -11,10 +11,10 @@
         <div>
             <p class="fw-semibold">Название рассылки: {{extra_value.name}}</p>
             <p class="fw-semibold">Начало: {{extra_value.started_at}}</p>
-            <p class="fw-semibold"">Завершение: {{extra_value.ended_at}}</p>
-            <p class="fw-semibold"">Время рассылки: {{extra_value.start_time}}</p>
-            <p class="fw-semibold"">Сообщение: {{extra_value.message.subject}}</p>
-            <p class="fw-semibold"">Периодичность: {{regularity_list|lookup:extra_value.regularity}}</p>
+            <p class="fw-semibold">Завершение: {{extra_value.ended_at}}</p>
+            <p class="fw-semibold">Время рассылки: {{extra_value.start_time}}</p>
+            <p class="fw-semibold">Сообщение: {{extra_value.message.subject}}</p>
+            <p class="fw-semibold">Периодичность: {{regularity_list|lookup:extra_value.regularity}}</p>
         </div>
         {% endif %}
         <div class="text-center align-middle">
@@ -22,14 +22,24 @@
                 {{ form.media }}
                 {% csrf_token %}
                 <table>{{ form.as_table }}</table>
+                <div class="btn-group justify-content-md-center w-50">
+                    <a class="btn btn-sm btn-outline-primary"
+                       href="{% url 'mailstream:message_list' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-card-text text-primary" viewBox="0 0 16 16">
+                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                            <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8m0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
+                        </svg>
+                        К списку текстов сообщений</a>
+                </div>
                 <input type="submit" value="{{button}}" class="w-50 btn btn-sm btn-outline-success"/>
                 <div class="btn-group justify-content-md-center w-50">
                     <a class="btn btn-sm btn-outline-warning"
                        href="{% url 'mailstream:stream_list' %}">Отмена</a>
                 </div>
+
             </form>
         </div>
-
     </div>
 </div>
 {% endblock %}

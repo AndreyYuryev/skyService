@@ -1,0 +1,29 @@
+{% extends 'mailstream/base.html' %}
+
+{% block content %}
+<div class="row justify-content-md-center border-top border-bottom">
+    <div class="align-middle py-3">
+        <h4 class="my-0 fw-normal text-center">Профиль</h4>
+        <p class="fs-5 text-body-secondary text-center">Изменение профиля пользователя</p>
+    </div>
+    <div class="col-6 bg-body-tertiary text-center">
+        {% if object %}
+        <div>
+            <p class="text-decoration-none">Email адрес: {{object.email}}</p>
+        </div>
+        {% endif %}
+        <div class="text-center">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Сохранить" class="w-50 btn btn-sm btn-outline-success"/>
+                <div class="btn-group justify-content-md-center w-50">
+                    <a class="btn btn-sm btn-outline-warning"
+                       href="{% url 'mailstream:start' %}">Отмена</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -4,7 +4,6 @@
            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <span class="fs-4">Сервис рассылок</span>
         </a>
-
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="{% url 'mailstream:stream_list' %}"
                                     class="nav-link link-body-emphasis text-decoration-none">Рассылки</a></li>
@@ -12,12 +11,46 @@
                                     class="nav-link link-body-emphasis text-decoration-none">Подписчики</a></li>
             <li class="nav-item"><a href="{% url 'blogstream:article_list' %}"
                                     class="nav-link link-body-emphasis text-decoration-none">Блог</a></li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <form method="post" action="{% url 'users:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link link-body-emphasis text-decoration-none">Выйти</button>
+                </form>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle link-body-emphasis text-decoration-none"
-                   href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Войти</a>
+                   href="/admin" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">Админка</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item"
+                           href="/admin">Админка</a></li>
+                    <li>
+                        <a class="dropdown-item"
+                           href="{% url 'users:password_change' %}">Смена пароля</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item"
+                           href="{% url 'users:profile' %}">Профиль</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-link link-body-emphasis text-primary fw-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person"
+                     viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+                {{user}}
+            </li>
+            {% else %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle link-body-emphasis text-decoration-none"
+                   href="{% url 'users:login' %}" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">Войти</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item"
-                           href="#">Войти
+                           href="{% url 'users:login' %}">Войти
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-box-arrow-in-up" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -27,18 +60,12 @@
                         </svg>
                     </a></li>
                     <li><a class="dropdown-item"
-                           href="#">Регистрация</a></li>
+                           href="{% url 'users:register' %}">Регистрация</a></li>
                     <li><a class="dropdown-item"
-                           href="#">Восстановление пароля</a></li>
+                           href="{% url 'users:password_reset' %}">Сбросить пароль</a></li>
                 </ul>
             </li>
-            {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link link-body-emphasis text-decoration-none"
-                                    href="#">Выйти</a></li>
             {% endif %}
-            <li class="nav-item"><a class="nav-link link-body-emphasis text-decoration-none"
-                                    href="/admin">Админка</a>
-            </li>
         </ul>
     </header>
 </div>
