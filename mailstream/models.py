@@ -39,14 +39,14 @@ class Stream(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название рассылки', default='Рассылка')
     started_at = models.DateField(verbose_name='Начало', default=timezone.now)
     ended_at = models.DateField(verbose_name='Завершение', default=timezone.now)
-    message = models.ForeignKey(Message, on_delete=models.RESTRICT, **NULLABLE, verbose_name='Сообщение')
+    start_time = models.TimeField(verbose_name='Время рассылки', default=timezone.now)
+    message = models.ForeignKey(Message, on_delete=models.RESTRICT, verbose_name='Сообщение')
     regularity = models.CharField(max_length=1, choices=REGULARITY_VALUES, default=MONTHLY,
                                   verbose_name='Периодичность')
     status = models.CharField(max_length=2, choices=STATUS_VALUES, default=CREATED, verbose_name='Текущий статус',
                               **NULLABLE)
-    # all_recipient = models.BooleanField(default=True, verbose_name='отправить всем')
     client = models.ManyToManyField(Client, verbose_name='Подписчик')
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='автор',
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='Автор',
                                    **NULLABLE)
     is_active = models.BooleanField(default=True, verbose_name='Активна')
 

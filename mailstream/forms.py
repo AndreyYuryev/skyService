@@ -1,6 +1,6 @@
-from django.forms import ModelForm, ModelMultipleChoiceField, CheckboxSelectMultiple
+from django.forms import ModelForm, ModelMultipleChoiceField, CheckboxSelectMultiple, TimeInput
 from mailstream.models import Stream
-from bootstrap_datepicker_plus.widgets import DatePickerInput
+from bootstrap_datepicker_plus.widgets import DatePickerInput, TimePickerInput
 from mailstream.models import Client
 # from django.forms.models import ModelMultipleChoiceField
 
@@ -18,10 +18,10 @@ class DateForm(ModelForm):
         fields = ('name',
                   'started_at',
                   'ended_at',
+                  'start_time',
                   'message',
                   'client',
-                  'regularity',
-                  'status',)
+                  'regularity',)
         widgets = {
             # 'started_at': DateTimeInput(format=('%d %B %Y %H:%M:%S'),
             #                             attrs={'type': 'datetime-local', 'class': 'form-control'}),
@@ -29,6 +29,8 @@ class DateForm(ModelForm):
             # "clients": CheckboxSelectMultiple(attrs={'class': 'form-control'}),
             "started_at": DatePickerInput(options={"format": "DD MMMM YYYY", 'locale': 'RU', }),
             "ended_at": DatePickerInput(range_from="started_at", options={"format": "DD MMMM YYYY", 'locale': 'RU', }),
+            # "start_time": TimePickerInput(options={"format": "HH:MM", 'locale': 'RU'}, attrs={'type': 'time'}),
+            "start_time": TimeInput(attrs={'type': 'time'}),
         }
 
     class Media:

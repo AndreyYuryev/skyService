@@ -1,13 +1,36 @@
 {% extends 'mailstream/base.html' %}
+{% load custom_tags %}
 {% block content %}
-<div class="card-body">
-    <p class="card-title pricing-card-title navy_color">Имя: {{ object.name }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Начало: {{ object.started_at }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Окончание: {{ object.ended_at }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Сообщение тема: {{ object.message.subject }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Сообщение: {{ object.message.body }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Периодичность: {{ regularity_value }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Статус: {{ status_value }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Все получатели: {{ object.all_recipient }}</small></p>
+<div class="row justify-content-md-center">
+    <div class="album py-5 bg-body-tertiary col-6">
+        <div class="col">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Информация о рассылке</h4>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <p class="card-title pricing-card-title navy_color">Имя: {{object.name}}</p>
+                    <p class="card-title pricing-card-title navy_color">Начало: {{object.started_at}}</p>
+                    <p class="card-title pricing-card-title navy_color">Окончание: {{object.ended_at}}</p>
+                    <p class="card-title pricing-card-title navy_color">Время рассылки: {{object.start_time}}</p>
+                    <p class="card-title pricing-card-title navy_color">Сообщение тема: {{object.message.subject}}</p>
+                    <p class="card-title pricing-card-title navy_color">Сообщение: {{object.message.body}}</p>
+                    <p class="card-title pricing-card-title navy_color">Периодичность:
+                        {{regularity_list|lookup:object.regularity}}</p>
+                    <p class="card-title pricing-card-title navy_color">Статус: {{status_list|lookup:object.status}}</p>
+                    <p class="card-title pricing-card-title navy_color">Активность: {{ object.is_active|is_active }}</p>
+                    <p class="card-title pricing-card-title navy_color">Подписчики:</p>
+                    <p class="card-title pricing-card-title navy_color">
+                        {% for client in object.client.all %}
+                    <div class="text-center card-title pricing-card-title navy_color">{{ client.fullname }}: {{client.email}}</div>
+                    {% endfor %}
+                    <div class="btn-group w-50">
+                        <a class="btn btn-sm btn-outline-secondary"
+                           href="{% url 'mailstream:stream_list' %}">К списку рассылок</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

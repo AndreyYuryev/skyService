@@ -29,3 +29,10 @@ def lookup(my_list, key):
         if str(item[0]) == str(key):
             return item[1]
     return ''
+
+
+@register.filter(name='is_active')
+def is_active(value):
+    if value == True:
+        return 'Активна'
+    return 'Не активна'

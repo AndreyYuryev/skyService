@@ -3,14 +3,15 @@
 {% block content %}
 <div class="row text-center">
     <div class="col-12">
-        <p class="fs-5 text-body-secondary">Список рассылок</p>
+        <p class="fs-5 text-body-secondary text-start">Список рассылок</p>
         <table class="table table-sm table-borderless">
-            <thead>
+            <thead class="border-bottom">
             <tr>
                 <th scope="col">Рассылка</th>
                 <th scope="col">Заголовок</th>
                 <th scope="col">Содержимое</th>
                 <th scope="col">Статус</th>
+                <th scope="col">Активность</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -18,14 +19,20 @@
             <tbody>
             {% for object in object_list %}
             <tr>
-                <td class="align-middle">
-                    <a class="w-100 btn btn-lg btn-outline-secondary"
-                       href="{% url 'mailstream:stream_detail' pk=object.pk %}">{{object.name}}</a>
+                <td class="text-start">
+                    <a class="link-body-emphasis text-decoration-none"
+                       href="{% url 'mailstream:stream_detail' pk=object.pk %}">{{object.name}}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-caret-right text-primary" viewBox="0 0 16 16">
+                            <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
+                        </svg>
+                    </a>
                 </td>
                 <td class="align-middle">{{ object.message.subject }}</td>
                 <td class="align-middle">{{ object.message.body|truncatechars:100 }}</td>
                 <td class="align-middle">{{ status_list|lookup:object.status }}</td>
-                <td class="align-middle"><a class="w-100 btn btn-lg btn-outline-success"
+                <td class="align-middle">{{ object.is_active|is_active }}</td>
+                <td class="align-middle"><a class="text-success"
                                             href="{% url 'mailstream:stream_update' pk=object.pk %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -35,34 +42,28 @@
                     </svg>
                 </a>
                 </td>
-                <td class="align-middle"><a class=""
+                <td class="align-middle"><a class="text-danger"
                                             href="{% url 'mailstream:stream_delete' pk=object.pk %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-trash3" viewBox="0 0 16 16">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
                     </svg>
-                </a>
-                </td>
+                </a></td>
             </tr>
             {% endfor %}
             </tbody>
             <tfooter>
-                <tr>
-                    <td class="align-middle">
-                        <a class="w-100 btn btn-lg btn-outline-warning"
-                           href="{% url 'mailstream:stream_create' %}">Создать рассылку</a>
+                <tr class="border-top">
+                    <td><a class="btn btn-outline-warning"
+                           href="{% url 'mailstream:stream_create' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-calendar-plus text-primary" viewBox="0 0 16 16">
+                            <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7"/>
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                        </svg>
+                        Создать рассылку</a>
                     </td>
                 </tr>
-                <td><a class="btn btn-outline-warning"
-                       href="{% url 'mailstream:client_create' %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-person-plus" viewBox="0 0 16 16">
-                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                        <path fill-rule="evenodd"
-                              d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
-                    </svg>
-                    Создать рассылку</a>
-                </td>
             </tfooter>
         </table>
     </div>

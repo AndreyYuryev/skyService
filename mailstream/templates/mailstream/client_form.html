@@ -16,9 +16,14 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="{{button}}" class="w-100 btn btn-sm btn-outline-success"/>
+                <input type="submit" value="{{button}}" class="w-50 btn btn-sm btn-outline-success"/>
+                <div class="btn-group justify-content-md-center w-50">
+                    <a class="btn btn-sm btn-outline-warning"
+                       href="{% url 'mailstream:client_list' %}">Отмена</a>
+                </div>
             </form>
         </div>
+
     </div>
 </div>
 

@@ -3,12 +3,11 @@ from django.views.generic import ListView, DeleteView, DetailView, CreateView, U
 from django.urls import reverse_lazy
 from mailstream.models import Message, Client, Stream
 from mailstream.forms import DateForm
-from mailstream.services import STATUS_VALUES
+from mailstream.services import STATUS_VALUES, REGULARITY_VALUES
 from django.forms import modelform_factory
 from blogstream.models import Article
 
 
-# Create your views here.
 class StartView(TemplateView):
     template_name = 'start.html'
 
@@ -49,7 +48,6 @@ class ClientUpdateView(UpdateView):
     fields = ('comments',)
     extra_context = {'title': 'Изменение подписчика', 'button': 'Изменить', 'header': 'Изменить подписчика'}
 
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['fullname'] = self.object.fullname
@@ -60,15 +58,15 @@ class ClientUpdateView(UpdateView):
         return reverse_lazy('mailstream:client_detail', kwargs={'pk': self.object.pk})
 
 
-class ClientDetailView(DetailView):
-    model = Client
-    extra_context = {'title': 'Обзор подписчика'}
-
-
 class ClientDeleteView(DeleteView):
     model = Client
     extra_context = {'title': 'Удаление подписчика', 'button': 'Удаление'}
     success_url = reverse_lazy('mailstream:client_list')
+
+
+class ClientDetailView(DetailView):
+    model = Client
+    extra_context = {'title': 'Обзор подписчика'}
 
 
 class ClientListView(ListView):
@@ -116,14 +114,9 @@ class StreamCreateView(CreateView):
         self.object.save()
         return super().form_valid(form)
 
-    def get_form_class(self):
-        return modelform_factory(form=DateForm, model=Stream,
-                                 fields='__all__')
-
-
-class StreamDetailView(DetailView):
-    model = Stream
-    extra_context = {'title': 'Обзор настроек рассылки'}
+    # def get_form_class(self):
+    #     return modelform_factory(form=DateForm, model=Stream,
+    #                              fields='__all__')
 
 
 class StreamUpdateView(UpdateView):
@@ -140,13 +133,26 @@ class StreamUpdateView(UpdateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['extra_value'] = self.object.name
+        context['extra_value'] = self.object
+        context['regularity_list'] = REGULARITY_VALUES
         return context
 
 
 class StreamDeleteView(DeleteView):
     model = Stream
     extra_context = {'title': 'Удаление рассылки', 'button': 'Удаление'}
+    success_url = reverse_lazy('mailstream:stream_list')
+
+
+class StreamDetailView(DetailView):
+    model = Stream
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = 'Обзор настроек рассылки'
+        context['status_list'] = STATUS_VALUES
+        context['regularity_list'] = REGULARITY_VALUES
+        return context
 
 
 class StreamListView(ListView):
@@ -163,4 +169,5 @@ class StreamListView(ListView):
         context = super().get_context_data(*args, **kwargs)
         context['title'] = 'Обзор рассылок'
         context['status_list'] = STATUS_VALUES
+        context['regularity_list'] = REGULARITY_VALUES
         return context
