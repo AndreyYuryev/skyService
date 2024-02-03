@@ -4,7 +4,7 @@ from mailstream.models import Client, Stream, Message, Log
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('fullname', 'email','comments', 'created_by')
+    list_display = ('fullname', 'email','comments', 'created_by', )
     list_filter = ('fullname', 'email',)
     search_fields = ('fullname',)
 

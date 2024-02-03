@@ -56,6 +56,8 @@ class Stream(models.Model):
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+        permissions = [('set_active', 'Активация рассылки'),
+                       ('set_client', 'Изменение подписчиков'),]
 
 
 class Log(models.Model):

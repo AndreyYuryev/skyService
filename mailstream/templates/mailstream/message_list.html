@@ -47,6 +47,8 @@
             </tbody>
             <tfooter>
                 <tr class="border-top">
+                    {% for group in user.groups.all %}
+                    {% if group.name == 'normal' %}
                     <td><a class="btn btn-outline-warning"
                            href="{% url 'mailstream:client_create' %}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -56,6 +58,8 @@
                         </svg>
                         Добавить новый текст рассылки</a>
                     </td>
+                    {% endif %}
+                    {% endfor %}
                 </tr>
             </tfooter>
         </table>

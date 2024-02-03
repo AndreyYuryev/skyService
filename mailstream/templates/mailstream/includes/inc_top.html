@@ -5,10 +5,12 @@
             <span class="fs-4">Сервис рассылок</span>
         </a>
         <ul class="nav nav-pills">
+            {% if user.is_authenticated %}
             <li class="nav-item"><a href="{% url 'mailstream:stream_list' %}"
                                     class="nav-link link-body-emphasis text-decoration-none">Рассылки</a></li>
             <li class="nav-item"><a href="{% url 'mailstream:client_list' %}"
                                     class="nav-link link-body-emphasis text-decoration-none">Подписчики</a></li>
+            {% endif %}
             <li class="nav-item"><a href="{% url 'blogstream:article_list' %}"
                                     class="nav-link link-body-emphasis text-decoration-none">Блог</a></li>
             {% if user.is_authenticated %}

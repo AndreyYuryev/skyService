@@ -6,6 +6,9 @@ from mailstream.forms import DateForm
 from mailstream.services import STATUS_VALUES, REGULARITY_VALUES
 from django.forms import modelform_factory
 from blogstream.models import Article
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import Group
+from users.models import User
 
 
 class StartView(TemplateView):
@@ -28,10 +31,11 @@ class StartView(TemplateView):
         return context_data
 
 
-class ClientCreateView(CreateView):
+class ClientCreateView(PermissionRequiredMixin, CreateView):
     model = Client
     fields = ('fullname', 'email', 'comments',)
     extra_context = {'title': 'Создание подписчика', 'button': 'Добавить', 'header': 'Добавить подписчика'}
+    permission_required = 'mailstream.add_client'
 
     def get_success_url(self):
         return reverse_lazy('mailstream:client_detail', kwargs={'pk': self.object.pk})
@@ -43,10 +47,11 @@ class ClientCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ClientUpdateView(UpdateView):
+class ClientUpdateView(PermissionRequiredMixin, UpdateView):
     model = Client
     fields = ('comments',)
     extra_context = {'title': 'Изменение подписчика', 'button': 'Изменить', 'header': 'Изменить подписчика'}
+    permission_required = 'mailstream.change_client'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -58,34 +63,44 @@ class ClientUpdateView(UpdateView):
         return reverse_lazy('mailstream:client_detail', kwargs={'pk': self.object.pk})
 
 
-class ClientDeleteView(DeleteView):
+class ClientDeleteView(PermissionRequiredMixin, DeleteView):
     model = Client
     extra_context = {'title': 'Удаление подписчика', 'button': 'Удаление'}
     success_url = reverse_lazy('mailstream:client_list')
+    permission_required = 'mailstream.delete_client'
 
 
-class ClientDetailView(DetailView):
+class ClientDetailView(PermissionRequiredMixin, DetailView):
     model = Client
     extra_context = {'title': 'Обзор подписчика'}
+    permission_required = 'mailstream.view_client'
 
 
-class ClientListView(ListView):
+class ClientListView(PermissionRequiredMixin, ListView):
     model = Client
     extra_context = {'title': 'Обзор подписчиков'}
+    permission_required = 'mailstream.view_client'
+
+    def get_queryset(self, **kwargs):
+        if self.request.user.groups.filter(name='moderator').exists():
+            return Client.objects.all()
+        return Client.objects.filter(created_by=self.request.user)
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(PermissionRequiredMixin, CreateView):
     model = Message
     extra_context = {'title': 'Создание сообщения рассылки', 'button': 'Добавить'}
     fields = ('subject', 'body',)
+    permission_required = 'mailstream.add_message'
 
     def get_success_url(self):
         return reverse_lazy('mailstream:message_detail', kwargs={'pk': self.object.pk})
 
 
-class MessageUpdateView(UpdateView):
+class MessageUpdateView(PermissionRequiredMixin, UpdateView):
     model = Message
     fields = ('body',)
+    permission_required = 'mailstream.change_message'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -98,26 +113,35 @@ class MessageUpdateView(UpdateView):
         return reverse_lazy('mailstream:message_detail', kwargs={'pk': self.object.pk})
 
 
-class MessageDeleteView(DeleteView):
+class MessageDeleteView(PermissionRequiredMixin, DeleteView):
     model = Message
     extra_context = {'title': 'Удаление текста сообщения рассылки', 'button': 'Удалить'}
     success_url = reverse_lazy('mailstream:message_list')
+    permission_required = 'mailstream.delete_message'
 
 
-class MessageDetailView(DetailView):
+class MessageDetailView(PermissionRequiredMixin, DetailView):
     model = Message
     extra_context = {'title': 'Обзор содержимого рассылки'}
+    permission_required = 'mailstream.view_message'
 
 
-class MessageListView(ListView):
+class MessageListView(PermissionRequiredMixin, ListView):
     model = Message
     extra_context = {'title': 'Обзор текстов рассылок'}
+    permission_required = 'mailstream.view_message'
+
+    # def get_queryset(self, **kwargs):
+    #     if self.request.user.groups.filter(name='moderator').exists():
+    #         return Message.objects.all()
+    #     return Message.objects.filter(created_by=self.request.user)
 
 
-class StreamCreateView(CreateView):
+class StreamCreateView(PermissionRequiredMixin, CreateView):
     model = Stream
     form_class = DateForm
     extra_context = {'title': 'Создание настроек рассылки', 'button': 'Добавить'}
+    permission_required = 'mailstream.add_stream'
 
     def get_success_url(self):
         return reverse_lazy('mailstream:stream_detail', kwargs={'pk': self.object.pk})
@@ -133,10 +157,11 @@ class StreamCreateView(CreateView):
     #                              fields='__all__')
 
 
-class StreamUpdateView(UpdateView):
+class StreamUpdateView(PermissionRequiredMixin, UpdateView):
     model = Stream
     form_class = DateForm
     extra_context = {'title': 'Изменение настроек рассылки', 'button': 'Изменить'}
+    permission_required = 'mailstream.change_stream'
 
     def get_success_url(self):
         return reverse_lazy('mailstream:stream_list')
@@ -152,14 +177,16 @@ class StreamUpdateView(UpdateView):
         return context
 
 
-class StreamDeleteView(DeleteView):
+class StreamDeleteView(PermissionRequiredMixin, DeleteView):
     model = Stream
     extra_context = {'title': 'Удаление рассылки', 'button': 'Удаление'}
     success_url = reverse_lazy('mailstream:stream_list')
+    permission_required = 'mailstream.delete_stream'
 
 
-class StreamDetailView(DetailView):
+class StreamDetailView(PermissionRequiredMixin, DetailView):
     model = Stream
+    permission_required = 'mailstream.view_stream'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -169,15 +196,22 @@ class StreamDetailView(DetailView):
         return context
 
 
-class StreamListView(ListView):
+class StreamListView(PermissionRequiredMixin, ListView):
     model = Stream
+    permission_required = 'mailstream.view_stream'
 
     def get_queryset(self, **kwargs):
         is_active = self.request.GET.get('active', '')
-        if is_active:
-            return Stream.objects.filter(is_active=True)
+        if self.request.user.groups.filter(name='moderator').exists():
+            if is_active:
+                return Stream.objects.filter(is_active=True)
+            else:
+                return Stream.objects.all()
         else:
-            return Stream.objects.all()
+            if is_active:
+                return Stream.objects.filter(is_active=True, created_by=self.request.user)
+            else:
+                return Stream.objects.filter(created_by=self.request.user)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

@@ -7,6 +7,7 @@ from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 from users.services import AppTokenGenerator, send_email_by_django
+from django.contrib.auth.models import Group
 
 
 class ProfileView(UpdateView):
@@ -28,6 +29,9 @@ class RegisterView(CreateView):
         if form.is_valid():
             user = form.save()
             user.is_active = False
+            group = Group.objects.get(name='normal')
+            if group:
+                user.groups.add(group)
             user.save()
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = AppTokenGenerator().make_token(user)

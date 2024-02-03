@@ -15,8 +15,13 @@
             <div>
                 <h3 class="fs-2 text-body-emphasis">Список всех рассылок</h3>
                 <p>Это полный список всех существовавших рассылок</p>
+                {% if user.is_authenticated %}
                 <a href="{% url 'mailstream:stream_list' %}" class="btn btn-outline-secondary">
                     К списку рассылок <span class="badge text-bg-primary">{{all_streams}}</span></a>
+                {% else %}
+                <p class="btn btn-outline-secondary">К списку рассылок <span class="badge text-bg-primary">{{all_streams}}</span>
+                </p>
+                {% endif %}
             </div>
         </div>
         <div class="col d-flex align-items-start">
@@ -32,8 +37,13 @@
             <div>
                 <h3 class="fs-2 text-body-emphasis">Список активных рассылок</h3>
                 <p>Это полный список активных рассылок</p>
+                {% if user.is_authenticated %}
                 <a href="{% url 'mailstream:stream_list'  %}?active=True" class="btn btn-outline-secondary">
                     К активным рассылкам <span class="badge text-bg-primary">{{active_streams}}</span></a>
+                {% else %}
+                <p class="btn btn-outline-secondary">К активным рассылкам <span class="badge text-bg-primary">{{active_streams}}</span>
+                </p>
+                {% endif %}
             </div>
         </div>
         <div class="col d-flex align-items-start">
@@ -46,8 +56,13 @@
             <div>
                 <h3 class="fs-2 text-body-emphasis">Подписчики</h3>
                 <p>Самая главная ценность для любой рассылки - это обширная аудитория</p>
+                {% if user.is_authenticated %}
                 <a href="{% url 'mailstream:client_list' %}" class="btn btn-outline-secondary">
                     К списку подписчиков <span class="badge text-bg-primary">{{clients}}</span></a>
+                {% else %}
+                <p class="btn btn-outline-secondary">К списку подписчиков <span class="badge text-bg-primary">{{clients}}</span>
+                </p>
+                {% endif %}
             </div>
         </div>
     </div>
