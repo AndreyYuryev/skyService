@@ -1,10 +1,23 @@
 {% extends 'mailstream/base.html' %}
 {% block content %}
-<div class="card-body">
-    <p class="card-title pricing-card-title navy_color">ФИО: {{ object.fullname }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Email: {{ object.email }}</small></p>
-    <p class="card-title pricing-card-title navy_color">Комментарии: {{ object.comments }}</small></p>
-    <a class="w-100 btn btn-lg btn-outline-secondary"
-                       href="{% url 'mailstream:client_list' %}">к списку подписчиков</a>
+<div class="row justify-content-md-center">
+    <div class="album py-5 bg-body-tertiary col-6">
+            <div class="col">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Информация о подписчике</h4>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-title pricing-card-title navy_color">ФИО: {{ object.fullname }}</p>
+                        <p class="card-title pricing-card-title navy_color">Email: {{ object.email }}</p>
+                        <p class="card-title pricing-card-title navy_color">Комментарии: {{ object.comments}}</p>
+                        <div class="btn-group w-50">
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'mailstream:client_list' %}">К списку подписчиков</a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

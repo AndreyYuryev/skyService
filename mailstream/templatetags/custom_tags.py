@@ -13,7 +13,6 @@ def mediapath_tag(path):
 
 @register.filter(name='mediapath')
 def mediapath(path):
-    print(path)
     if path:
         return f'/media/{path}'
     return '#'

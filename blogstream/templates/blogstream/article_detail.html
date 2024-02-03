@@ -1,6 +1,7 @@
 {% extends 'mailstream/base.html' %}
 {% load custom_tags %}
 {% block content %}
+
 <div class="album py-5 bg-body-tertiary">
     <div class="row">
         <div class="col">
@@ -18,13 +19,17 @@
                     </div>
                     <img src="{{ object.image|mediapath }}" class="img-fluid" alt="Image"/>
                     <p class="card-text">{{object.text}}</p>
-                </div>
-                <div class="btn-group w-50">
-                    <a class="w-50 btn btn-sm btn-outline-secondary" href="{% url 'blogstream:article_list' %}">К списку
-                        статей</a>
+                    <div class="text-center">
+                        <div class="btn-group w-50">
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'blogstream:article_list' %}">К
+                                списку
+                                статей</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

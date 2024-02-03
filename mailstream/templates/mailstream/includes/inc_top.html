@@ -1,16 +1,44 @@
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="{% url 'mailstream:start' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <a href="{% url 'mailstream:start' %}"
+           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <span class="fs-4">Сервис рассылок</span>
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="{% url 'mailstream:stream_list' %}" class="btn btn-outline-primary rounded-pill px-3">Рассылки</a></li>
-            <li class="nav-item"><a href="{% url 'mailstream:client_list' %}" class="btn btn-outline-primary rounded-pill px-3">Подписчики</a></li>
-            <li class="nav-item"><a href="{% url 'blogstream:article_list' %}" class="btn btn-outline-primary rounded-pill px-3">Блог</a></li>
-            <li class="nav-item"><a href="#" class="btn btn-outline-primary rounded-pill px-3">Войти</a></li>
-            <li class="nav-item"><a href="#" class="btn btn-outline-primary rounded-pill px-3">Регистрация</a></li>
-            <li class="nav-item"><a href="/admin" class="btn btn-outline-primary rounded-pill px-3">Админка</a></li>
+            <li class="nav-item"><a href="{% url 'mailstream:stream_list' %}"
+                                    class="nav-link link-body-emphasis text-decoration-none">Рассылки</a></li>
+            <li class="nav-item"><a href="{% url 'mailstream:client_list' %}"
+                                    class="nav-link link-body-emphasis text-decoration-none">Подписчики</a></li>
+            <li class="nav-item"><a href="{% url 'blogstream:article_list' %}"
+                                    class="nav-link link-body-emphasis text-decoration-none">Блог</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle link-body-emphasis text-decoration-none"
+                   href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Войти</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item"
+                           href="#">Войти
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-box-arrow-in-up" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1z"/>
+                            <path fill-rule="evenodd"
+                                  d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z"/>
+                        </svg>
+                    </a></li>
+                    <li><a class="dropdown-item"
+                           href="#">Регистрация</a></li>
+                    <li><a class="dropdown-item"
+                           href="#">Восстановление пароля</a></li>
+                </ul>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link link-body-emphasis text-decoration-none"
+                                    href="#">Выйти</a></li>
+            {% endif %}
+            <li class="nav-item"><a class="nav-link link-body-emphasis text-decoration-none"
+                                    href="/admin">Админка</a>
+            </li>
         </ul>
     </header>
 </div>

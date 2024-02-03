@@ -10,8 +10,8 @@ from django.conf import settings
 class Client(models.Model):
     fullname = models.CharField(max_length=100, verbose_name='Пользователь')
     email = models.EmailField(max_length=255, unique=True, verbose_name='Email адрес')
-    comments = models.TextField(**NULLABLE)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='автор',
+    comments = models.TextField(**NULLABLE, verbose_name='Комментарии')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name='Автор',
                                    **NULLABLE)
 
     def __str__(self):
@@ -24,8 +24,8 @@ class Client(models.Model):
 
 
 class Message(models.Model):
-    subject = models.CharField(max_length=120, verbose_name='тема письма')
-    body = models.TextField(verbose_name='содержимое письма', **NULLABLE)
+    subject = models.CharField(max_length=120, verbose_name='Тема письма')
+    body = models.TextField(verbose_name='Содержимое письма', **NULLABLE)
 
     def __str__(self):
         return f'{self.subject}'
