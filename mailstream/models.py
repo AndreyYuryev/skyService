@@ -61,10 +61,11 @@ class Stream(models.Model):
 
 
 class Log(models.Model):
-    stream = models.ForeignKey(Stream, on_delete=models.PROTECT, verbose_name='Рассылка', **NULLABLE)
-    client = models.ForeignKey(Client, on_delete=models.PROTECT, verbose_name='Получатель', **NULLABLE)
+    stream = models.ForeignKey(Stream, on_delete=models.PROTECT, verbose_name='Рассылка')
+    client = models.ForeignKey(Client, on_delete=models.PROTECT, verbose_name='Получатель')
     attempt_status = models.CharField(max_length=1, choices=ATTEMPT_VALUES, verbose_name='Статус попытки')
-    last_attempt = models.DateTimeField()
+    attempt_date = models.DateField()
+    attempt_time = models.TimeField()
     response = models.TextField(**NULLABLE)
 
     def __str__(self):

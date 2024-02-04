@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'blogstream',
     'bootstrap_datepicker_plus',
     'jquery',
+    'django_apscheduler',
 ]
 
 MIDDLEWARE = [
@@ -157,8 +158,7 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-
-CACHE_ENABLED = False
+CACHE_ENABLED = True
 
 if CACHE_ENABLED:
     CACHES = {
@@ -167,3 +167,20 @@ if CACHE_ENABLED:
             "LOCATION": "redis://127.0.0.1:6379",
         }
     }
+
+# Format string for displaying run time timestamps in the Django admin site. The default
+# just adds seconds to the standard Django format, which is useful for displaying the timestamps
+# for jobs that are scheduled to run on intervals of less than one minute.
+#
+# See https://docs.djangoproject.com/en/dev/ref/settings/#datetime-format for format string
+# syntax details.
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+
+# Maximum run time allowed for jobs that are triggered manually via the Django admin site, which
+# prevents admin site HTTP requests from timing out.
+#
+# Longer running jobs should probably be handed over to a background task processing library
+# that supports multiple background worker processes instead (e.g. Dramatiq, Celery, Django-RQ,
+# etc. See: https://djangopackages.org/grids/g/workers-queues-tasks/ for popular options).
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
+

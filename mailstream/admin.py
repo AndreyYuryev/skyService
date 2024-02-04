@@ -25,7 +25,7 @@ class MessageAdmin(admin.ModelAdmin):
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
-    list_display = ('stream', 'client', 'attempt_status', 'last_attempt',)
+    list_display = ('stream', 'client', 'attempt_status', 'attempt_date', 'attempt_time',)
     list_filter = ('stream', 'client', 'attempt_status',)
     search_fields = ('stream', 'client', 'attempt_status',)
 

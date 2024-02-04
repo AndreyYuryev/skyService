@@ -11,6 +11,10 @@ class AppTokenGenerator(PasswordResetTokenGenerator):
 
 
 def send_email_by_django(subject='', message='', recipients=[]):
-    send_mail(subject=subject, message=message,
-              from_email=settings.EMAIL_HOST_USER,
-              recipient_list=recipients)
+    try:
+        send_mail(subject=subject, message=message,
+                  from_email=settings.EMAIL_HOST_USER,
+                  recipient_list=recipients, fail_silently=False)
+    except Exception as ex:
+        return False
+    return True

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DeleteView, DetailView, CreateView, UpdateView, TemplateView
 from django.urls import reverse_lazy
-from mailstream.models import Message, Client, Stream
+from mailstream.models import Message, Client, Stream, Log
 from mailstream.forms import DateForm
-from mailstream.services import STATUS_VALUES, REGULARITY_VALUES, ENDED
+from mailstream.services import STATUS_VALUES, REGULARITY_VALUES, ENDED, ATTEMPT_VALUES
+from mailstream.cache_services import get_clients
 from django.forms import modelform_factory
 from blogstream.models import Article
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -22,7 +23,7 @@ class StartView(TemplateView):
         for item in range(3):
             articles_list.append(articles[item])
         context_data['articles_list'] = articles_list
-        clients_count = Client.objects.all().count()
+        clients_count = get_clients().all().count() # cached
         context_data['clients'] = clients_count
         active_streams_count = Stream.objects.filter(is_active=True).count()
         context_data['active_streams'] = active_streams_count
@@ -83,7 +84,7 @@ class ClientListView(PermissionRequiredMixin, ListView):
 
     def get_queryset(self, **kwargs):
         if self.request.user.groups.filter(name='moderator').exists():
-            return Client.objects.all()
+            return get_clients()  # cached
         return Client.objects.filter(created_by=self.request.user)
 
 
@@ -234,4 +235,31 @@ class StreamListView(PermissionRequiredMixin, ListView):
         context['title'] = 'Обзор рассылок'
         context['status_list'] = STATUS_VALUES
         context['regularity_list'] = REGULARITY_VALUES
+        return context
+
+
+class LogListView(ListView):
+    model = Log
+    permission_required = 'mailstream.view_log'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = 'Обзор журналов'
+        context['attempt_list'] = ATTEMPT_VALUES
+        return context
+
+    def get_queryset(self, **kwargs):
+        id = self.kwargs.get('pk')
+        if id:
+            return Log.objects.filter(stream_id=id)
+        return Log.objects.all()
+
+class LogDetailView(DetailView):
+    model = Log
+    permission_required = 'mailstream.view_log'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = 'Обзор журналов'
+        context['attempt_list'] = ATTEMPT_VALUES
         return context

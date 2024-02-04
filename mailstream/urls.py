@@ -2,7 +2,7 @@ from django.urls import path
 from mailstream.apps import MailstreamConfig
 from mailstream.views import (StartView,
                               MessageCreateView, MessageDetailView, MessageUpdateView, MessageListView,
-                              MessageDeleteView,
+                              MessageDeleteView, LogListView, LogDetailView,
                               ClientCreateView, ClientUpdateView, ClientDetailView, ClientDeleteView, ClientListView,
                               StreamDetailView, StreamCreateView, StreamUpdateView, StreamDeleteView, StreamListView)
 
@@ -28,4 +28,7 @@ urlpatterns = [
     path('stream/detail/<int:pk>', StreamDetailView.as_view(), name='stream_detail'),
     path('stream/update/<int:pk>', StreamUpdateView.as_view(), name='stream_update'),
     path('stream/delete/<int:pk>', StreamDeleteView.as_view(), name='stream_delete'),
+
+    path('log/list/<int:pk>', LogListView.as_view(), name='log_list'),
+    path('log/detail/<int:pk>', LogDetailView.as_view(), name='log_detail'),
 ]
