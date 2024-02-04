@@ -1,0 +1,48 @@
+{% extends 'mailstream/base.html' %}
+{% load custom_tags %}
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="album py-5 bg-body-tertiary col-6">
+        <div class="col">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Информация о рассылке</h4>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <p class="card-title pricing-card-title navy_color">Имя: {{object.name}}</p>
+                    <p class="card-title pricing-card-title navy_color">Начало: {{object.started_at}}</p>
+                    <p class="card-title pricing-card-title navy_color">Окончание: {{object.ended_at}}</p>
+                    <p class="card-title pricing-card-title navy_color">Время рассылки: {{object.start_time}}</p>
+                    <p class="card-title pricing-card-title navy_color">Сообщение тема: {{object.message.subject}}</p>
+                    <p class="card-title pricing-card-title navy_color">Сообщение: {{object.message.body}}</p>
+                    <p class="card-title pricing-card-title navy_color">Периодичность:
+                        {{regularity_list|lookup:object.regularity}}</p>
+                    <p class="card-title pricing-card-title navy_color">Статус: {{status_list|lookup:object.status}}</p>
+                    <p class="card-title pricing-card-title navy_color">Активность: {{ object.is_active|is_active }}</p>
+                    <p class="card-title pricing-card-title navy_color">Подписчики:</p>
+                    <p class="card-title pricing-card-title navy_color">
+                        {% for client in object.client.all %}
+                    <div class="text-center card-title pricing-card-title navy_color">{{ client.fullname }}:
+                        {{client.email}}
+                    </div>
+                    {% endfor %}
+                    <div class="btn-group w-50">
+                        <a class="link-body-emphasis text-decoration-none"
+                           href="{% url 'mailstream:log_list' pk=object.pk %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-journals" viewBox="0 0 16 16">
+                                <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
+                                <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0"/>
+                            </svg>
+                            К журналу рассылки</a>
+                    </div>
+                    <div class="btn-group w-50">
+                        <a class="btn btn-sm btn-outline-secondary"
+                           href="{% url 'mailstream:stream_list' %}">К списку рассылок</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

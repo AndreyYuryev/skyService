@@ -1,0 +1,47 @@
+{% extends 'mailstream/base.html' %}
+{% load custom_tags %}
+{% block content %}
+<div class="row text-center">
+    <div class="col-12">
+        <p class="fs-5 text-body-secondary text-start">Журнал рассылок</p>
+        <table class="table table-sm table-borderless">
+            <thead class="border-bottom">
+            <tr>
+                <th scope="col">Имя рассылки</th>
+                <th scope="col">Подписчик</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Время</th>
+                <th scope="col">Ответ</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+            <tr>
+                <td class="text-start">
+                    <a class="link-body-emphasis text-decoration-none"
+                       href="{% url 'mailstream:log_detail' pk=object.pk %}">{{object.stream.name}}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-caret-right text-primary" viewBox="0 0 16 16">
+                            <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
+                        </svg>
+                    </a>
+                </td>
+                <td class="text-start">{{ object.client.email }}</td>
+                <td class="align-middle">{{ attempt_list|lookup:object.attempt_status }}</td>
+                <td class="align-middle">{{ object.attempt_date }}</td>
+                <td class="align-middle">{{ object.attempt_time }}</td>
+                <td class="align-middle">{{ object.response }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="btn-group w-50 text-start">
+                <a class="btn btn-sm btn-outline-secondary"
+                   href="{% url 'mailstream:stream_list' %}">К списку рассылок</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

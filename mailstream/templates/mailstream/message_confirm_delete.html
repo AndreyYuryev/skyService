@@ -1,0 +1,16 @@
+{% extends 'mailstream/base.html' %}
+{% block content %}
+<div class="row">
+    <div class="text-center">
+        <form method="post" class="card col-6">
+            {% csrf_token %}
+            <h2>Удаление текста сообщения</h2>
+            <p>Действительно удалить текст сообщения "{{ object.subject }}"?</p>
+            <p class="form-buttons">
+                <input type="submit" value="{{button}}" class="btn btn-success"/>
+                <a href="{% url 'mailstream:message_list' %}" class="btn btn-outline-danger">Отмена</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

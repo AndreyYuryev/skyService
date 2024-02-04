@@ -1,0 +1,22 @@
+{% extends 'mailstream/base.html' %}
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="album py-5 bg-body-tertiary col-6">
+            <div class="col">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Текст сообщения для рассылки</h4>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-title pricing-card-title navy_color">Тема письмо: {{ object.subject }}</p>
+                        <p class="card-title pricing-card-title navy_color">Содержимое: {{ object.body }}</p>
+                        <div class="btn-group w-50">
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'mailstream:message_list' %}">К списку текстов рассылок</a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

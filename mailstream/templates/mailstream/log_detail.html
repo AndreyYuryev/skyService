@@ -1,0 +1,28 @@
+{% extends 'mailstream/base.html' %}
+{% load custom_tags %}
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="album py-5 bg-body-tertiary col-6">
+        <div class="col">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Журнал рассылки</h4>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <p class="card-title pricing-card-title navy_color">Наименование рассылки: {{ object.stream.name }}</p>
+                    <p class="card-title pricing-card-title navy_color">Подписчик: {{ object.client.email }}</p>
+                    <p class="card-title pricing-card-title navy_color">Статус:
+                        {{attempt_list|lookup:object.attempt_status}}</p>
+                    <p class="card-title pricing-card-title navy_color">Дата: {{ object.attempt_date }}</p>
+                    <p class="card-title pricing-card-title navy_color">Время: {{ object.attempt_time }}</p>
+                    <p class="card-title pricing-card-title navy_color">Ответ: {{ object.response }}</p>
+                    <div class="btn-group w-50">
+                        <a class="btn btn-sm btn-outline-secondary"
+                           href="{% url 'mailstream:log_list' pk=object.pk %}">К списку журналов рассылок</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

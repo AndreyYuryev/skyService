@@ -1,0 +1,178 @@
+[
+  {
+    "model": "mailstream.client",
+    "pk": 1,
+    "fields": {
+      "fullname": "Иванов Иван Иванович",
+      "email": "ivanov@sky.pro",
+      "comments": "первый получатель",
+      "created_by": 2
+    }
+  },
+  {
+    "model": "mailstream.client",
+    "pk": 2,
+    "fields": {
+      "fullname": "Петров Петр",
+      "email": "petrov@sky.pro",
+      "comments": "Второй клиент с комментариями",
+      "created_by": 2
+    }
+  },
+  {
+    "model": "mailstream.client",
+    "pk": 4,
+    "fields": {
+      "fullname": "Сергеев Сергей Сергеевич",
+      "email": "sergeev@sky.pro",
+      "comments": "Очень любит рыбий жир, при звуках флейты теряет волю",
+      "created_by": 1
+    }
+  },
+  {
+    "model": "mailstream.message",
+    "pk": 1,
+    "fields": {
+      "subject": "Типовая рассылка",
+      "body": "Содержимое рассылки вввв"
+    }
+  },
+  {
+    "model": "mailstream.message",
+    "pk": 2,
+    "fields": {
+      "subject": "Дополнительная рассылка",
+      "body": "Информация по теме"
+    }
+  },
+  {
+    "model": "mailstream.stream",
+    "pk": 1,
+    "fields": {
+      "name": "Первая рассылка",
+      "started_at": "2024-02-01",
+      "ended_at": "2024-02-29",
+      "start_time": "19:32:31",
+      "message": 1,
+      "regularity": "D",
+      "status": "ST",
+      "created_by": 2,
+      "is_active": true,
+      "client": [
+        4,
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "model": "mailstream.stream",
+    "pk": 2,
+    "fields": {
+      "name": "Рассылка не для всех",
+      "started_at": "2024-02-01",
+      "ended_at": "2024-02-29",
+      "start_time": "19:14:00",
+      "message": 1,
+      "regularity": "M",
+      "status": "CR",
+      "created_by": 2,
+      "is_active": true,
+      "client": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "mailstream.stream",
+    "pk": 3,
+    "fields": {
+      "name": "Неактивная рассылка",
+      "started_at": "2024-02-02",
+      "ended_at": "2024-02-03",
+      "start_time": "19:13:56",
+      "message": 1,
+      "regularity": "M",
+      "status": "ED",
+      "created_by": 3,
+      "is_active": false,
+      "client": [
+        4,
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "model": "mailstream.stream",
+    "pk": 6,
+    "fields": {
+      "name": "рассылка позже",
+      "started_at": "2024-02-06",
+      "ended_at": "2024-02-05",
+      "start_time": "19:13:46",
+      "message": 1,
+      "regularity": "M",
+      "status": "CR",
+      "created_by": 2,
+      "is_active": true,
+      "client": [
+        4
+      ]
+    }
+  },
+  {
+    "model": "mailstream.stream",
+    "pk": 7,
+    "fields": {
+      "name": "Рассылка раз в неделю",
+      "started_at": "2024-01-28",
+      "ended_at": "2024-02-29",
+      "start_time": "19:19:23",
+      "message": 1,
+      "regularity": "W",
+      "status": "ST",
+      "created_by": 2,
+      "is_active": true,
+      "client": [
+        4
+      ]
+    }
+  },
+  {
+    "model": "mailstream.log",
+    "pk": 1,
+    "fields": {
+      "stream": 1,
+      "client": 4,
+      "attempt_status": "S",
+      "attempt_date": "2024-02-04",
+      "attempt_time": "19:32:39.318",
+      "response": "False"
+    }
+  },
+  {
+    "model": "mailstream.log",
+    "pk": 2,
+    "fields": {
+      "stream": 1,
+      "client": 2,
+      "attempt_status": "S",
+      "attempt_date": "2024-02-04",
+      "attempt_time": "19:32:39.318",
+      "response": "False"
+    }
+  },
+  {
+    "model": "mailstream.log",
+    "pk": 3,
+    "fields": {
+      "stream": 1,
+      "client": 1,
+      "attempt_status": "S",
+      "attempt_date": "2024-02-04",
+      "attempt_time": "19:32:39.318",
+      "response": "False"
+    }
+  }
+]

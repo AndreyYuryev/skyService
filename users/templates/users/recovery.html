@@ -1,0 +1,35 @@
+{% extends 'mailstream/base.html' %}
+
+{% block content %}
+<div class="col-12">
+    <form class="row" method="POST">
+        <div class="col-6">
+            <div class="card shadow-md">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Восстановление пароля</h4>
+                </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="w-100 btn btn-lg btn-success">Восстановить пароль</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row justify-content-md-center border-top border-bottom">
+    <div class="col-6 bg-body-tertiary">
+        <div class="align-middle py-3">
+            <h4 class="my-0 fw-normal text-center">Восстановление пароля</h4>
+        </div>
+        <div class="text-center">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="w-50 btn btn-sm btn-outline-success">Восстановить пароль</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

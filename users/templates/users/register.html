@@ -1,0 +1,19 @@
+{% extends 'mailstream/base.html' %}
+
+{% block content %}
+<div class="row justify-content-md-center border-top border-bottom">
+    <div class="col-6 bg-body-tertiary">
+        <div class="align-middle py-3">
+            <h4 class="my-0 fw-normal text-center">Регистрация</h4>
+            <p class="fs-5 text-body-secondary text-center">Регистрация пользователя</p>
+        </div>
+        <div class="text-center">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>{{form.as_table}}</table>
+                <button type="submit" class="w-50 btn btn-sm btn-outline-success">Зарегистрировать</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
