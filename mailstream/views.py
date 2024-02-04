@@ -3,7 +3,7 @@ from django.views.generic import ListView, DeleteView, DetailView, CreateView, U
 from django.urls import reverse_lazy
 from mailstream.models import Message, Client, Stream
 from mailstream.forms import DateForm
-from mailstream.services import STATUS_VALUES, REGULARITY_VALUES
+from mailstream.services import STATUS_VALUES, REGULARITY_VALUES, ENDED
 from django.forms import modelform_factory
 from blogstream.models import Article
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -167,12 +167,28 @@ class StreamUpdateView(PermissionRequiredMixin, UpdateView):
         return reverse_lazy('mailstream:stream_list')
 
     def get_form_class(self):
+        fields = ['started_at', 'ended_at', 'start_time', 'regularity', 'client', 'is_active', ]
+        if (self.request.user.has_perm('mailstream.set_active') or
+                self.request.user.has_perm('mailstream.set_client')):
+            fields.remove('started_at')
+            fields.remove('ended_at')
+            fields.remove('start_time')
+            fields.remove('regularity')
         return modelform_factory(form=DateForm, model=Stream,
-                                 fields=['client', 'is_active', ])
+                                 fields=fields)
+
+    def form_valid(self, form):
+        self.object = form.save()
+        if not self.object.is_active:
+            self.object.status = ENDED
+        self.object.save()
+        return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['extra_value'] = self.object
+        if (self.request.user.has_perm('mailstream.set_active') or
+                self.request.user.has_perm('mailstream.set_client')):
+            context['moderator'] = True
         context['regularity_list'] = REGULARITY_VALUES
         return context
 

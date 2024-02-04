@@ -7,14 +7,19 @@
         <h4 class="my-0 fw-normal text-center">{{title}}</h4>
     </div>
     <div class="col-8 bg-body-tertiary">
-        {% if extra_value %}
+        {% if moderator %}
         <div>
-            <p class="fw-semibold">Название рассылки: {{extra_value.name}}</p>
-            <p class="fw-semibold">Начало: {{extra_value.started_at}}</p>
-            <p class="fw-semibold">Завершение: {{extra_value.ended_at}}</p>
-            <p class="fw-semibold">Время рассылки: {{extra_value.start_time}}</p>
-            <p class="fw-semibold">Сообщение: {{extra_value.message.subject}}</p>
-            <p class="fw-semibold">Периодичность: {{regularity_list|lookup:extra_value.regularity}}</p>
+            <p class="fw-semibold">Название рассылки: {{object.name}}</p>
+            <p class="fw-semibold">Начало: {{object.started_at}}</p>
+            <p class="fw-semibold">Завершение: {{object.ended_at}}</p>
+            <p class="fw-semibold">Время рассылки: {{object.start_time}}</p>
+            <p class="fw-semibold">Сообщение: {{object.message.subject}}</p>
+            <p class="fw-semibold">Периодичность: {{regularity_list|lookup:object.regularity}}</p>
+        </div>
+        {% else %}
+        <div>
+            <p class="fw-semibold">Название рассылки: {{object.name}}</p>
+            <p class="fw-semibold">Сообщение: {{object.message.subject}}</p>
         </div>
         {% endif %}
         <div class="text-center align-middle">
