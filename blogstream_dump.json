@@ -1,1 +1,46 @@
-[]
+[
+  {
+    "model": "blogstream.article",
+    "pk": 1,
+    "fields": {
+      "title": "Первая статья в блоге",
+      "text": "Здесь описываем о чем хотим рассказать",
+      "image": "articles/newspaper_PkBmvex.jpg",
+      "viewed": 14,
+      "created_at": "2024-02-01"
+    }
+  },
+  {
+    "model": "blogstream.article",
+    "pk": 2,
+    "fields": {
+      "title": "Вторая статья в блоге",
+      "text": "Продолжение первой статьи",
+      "image": "",
+      "viewed": 58,
+      "created_at": "2024-02-02"
+    }
+  },
+  {
+    "model": "blogstream.article",
+    "pk": 3,
+    "fields": {
+      "title": "Статья для ознакомления",
+      "text": "Это третья статья из цикла",
+      "image": "",
+      "viewed": 61,
+      "created_at": "2024-02-02"
+    }
+  },
+  {
+    "model": "blogstream.article",
+    "pk": 4,
+    "fields": {
+      "title": "Итоговая статья цикла",
+      "text": "Подведем некоторые итоги",
+      "image": "articles/article.png",
+      "viewed": 19,
+      "created_at": "2024-02-02"
+    }
+  }
+]

@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$wnPJKhOHf10aQpWUVVCISy$S0CxeeeJ4yt/oLYTMvClxBtmlTJHDf7hXrap62RvXlk=",
+      "last_login": "2024-02-04T20:27:52.935Z",
+      "is_superuser": true,
+      "first_name": "admin",
+      "last_name": "skypro",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-02-01T09:49:10.541Z",
+      "email": "admin@sky.pro",
+      "phone": null,
+      "avatar": "",
+      "activate_key": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$5Clrv4DdvT0IeGLZ7Y401J$6aP+CSG46LyiDvFUQNuB3Tttjj7hSznCKRaiWORaby8=",
+      "last_login": "2024-02-04T20:27:25.601Z",
+      "is_superuser": false,
+      "first_name": "user1",
+      "last_name": "skypro",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-02-01T09:49:17Z",
+      "email": "user1@sky.pro",
+      "phone": null,
+      "avatar": "",
+      "activate_key": null,
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$YjzlAH17NVMF9FH5oO7ED8$PRlXR+12FeiUNEdK4TGp3F0jF/y03xkz7sLIBAo6cfE=",
+      "last_login": "2024-02-04T10:15:03.169Z",
+      "is_superuser": false,
+      "first_name": "user2",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-02-03T17:53:22Z",
+      "email": "user2@sky.pro",
+      "phone": null,
+      "avatar": "",
+      "activate_key": null,
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+  }
+]
