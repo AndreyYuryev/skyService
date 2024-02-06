@@ -7,5 +7,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # group_normal = Group.objects.create()
         # Создание fixtures
-        call_command('dumpdata', '--natural-foreign', '--exclude', 'auth.permission', '--exclude', 'contenttypes',
-                     '--output', 'fixtures.json')
+        call_command('dumpdata', '--natural-foreign', '--output', 'fixtures.json')
